@@ -10,6 +10,8 @@ export function LogoMarquee({ children, ariaLabel, speed = 0.35 }) {
   const pausedRef = useRef(false);
   const draggingRef = useRef(false);
   const dragRef = useRef(null);
+  const touchResumeRef = useRef(null);
+  const offsetRef = useRef(0);
   const [isDragging, setIsDragging] = useState(false);
   const items = Children.toArray(children);
 
@@ -43,8 +45,15 @@ export function LogoMarquee({ children, ariaLabel, speed = 0.35 }) {
         && !draggingRef.current
         && !reducedMotion.matches
       ) {
-        viewport.scrollLeft += speed;
-        normalizePosition();
+        // Scroll offsets snap to whole pixels, so sub-pixel steps would be lost.
+        // We accumulate them here and only move the strip once a full pixel is due.
+        offsetRef.current += speed;
+        const step = Math.floor(offsetRef.current);
+        if (step >= 1) {
+          offsetRef.current -= step;
+          viewport.scrollLeft += step;
+          normalizePosition();
+        }
       }
       frameRef.current = window.requestAnimationFrame(animate);
     };
@@ -60,6 +69,20 @@ export function LogoMarquee({ children, ariaLabel, speed = 0.35 }) {
       viewport.removeEventListener("scroll", normalizePosition);
     };
   }, [speed]);
+
+  // Touch devices scroll the strip natively; we only pause the automatic movement
+  // while the finger is on it (and for a moment after, to let momentum settle).
+  const pauseForTouch = () => {
+    window.clearTimeout(touchResumeRef.current);
+    pausedRef.current = true;
+  };
+
+  const resumeAfterTouch = () => {
+    window.clearTimeout(touchResumeRef.current);
+    touchResumeRef.current = window.setTimeout(() => { pausedRef.current = false; }, 2500);
+  };
+
+  useEffect(() => () => window.clearTimeout(touchResumeRef.current), []);
 
   const finishDrag = (event) => {
     if (draggingRef.current && viewportRef.current?.hasPointerCapture(event.pointerId)) {
@@ -109,7 +132,7 @@ export function LogoMarquee({ children, ariaLabel, speed = 0.35 }) {
       onMouseLeave={() => { pausedRef.current = false; }}
       onPointerCancel={finishDrag}
       onPointerDown={(event) => {
-        if (event.button !== 0) return;
+        if (event.button !== 0 || event.pointerType !== "mouse") return;
         dragRef.current = {
           x: event.clientX,
           y: event.clientY,
@@ -118,6 +141,9 @@ export function LogoMarquee({ children, ariaLabel, speed = 0.35 }) {
       }}
       onPointerMove={handlePointerMove}
       onPointerUp={finishDrag}
+      onTouchCancel={resumeAfterTouch}
+      onTouchEnd={resumeAfterTouch}
+      onTouchStart={pauseForTouch}
       ref={viewportRef}
       role="region"
       tabIndex="0"

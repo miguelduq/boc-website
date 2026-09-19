@@ -18,14 +18,14 @@ function CertificationCard({ certification }) {
   );
 }
 
-export function Certifications() {
+export function Certifications({ title = "Certifications", description = "Credentials held by BoC professionals", intro = false }) {
   return (
-    <section className="credibility-strip certifications" aria-labelledby="certifications-title">
+    <section className={"credibility-strip certifications" + (intro ? " certifications--intro" : "")} aria-labelledby="certifications-title">
       <div className="container credibility-strip__heading">
         <div>
-          <h2 id="certifications-title">Certifications</h2>
+          <h2 id="certifications-title">{title}</h2>
         </div>
-        <p>Credentials held by BoC professionals</p>
+        <p>{description}</p>
       </div>
       <LogoMarquee ariaLabel="Certifications. Drag horizontally to browse." speed={0.3}>
         {certifications.map((certification) => (

@@ -1,11 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
 import { ProjectImage } from "./ProjectImage";
 
-export function ProjectCard({ project, index = 0, onExplore }) {
+export function ProjectCard({ project, index = 0, onExplore, variant = "feature" }) {
   const href = "/projects/" + project.slug;
 
   return (
-    <article className="project-card" data-reveal>
+    <article className={"project-card" + (variant === "tile" ? " project-card--tile" : "")} data-reveal>
       <a
         className="project-card__link"
         href={href}
@@ -20,6 +20,7 @@ export function ProjectCard({ project, index = 0, onExplore }) {
           <p className="project-card__status">{project.category}</p>
           <h3>{project.title}</h3>
           <p>{project.description}</p>
+          {variant === "tile" && <p className="project-card__discipline">{project.discipline}</p>}
           <span className="project-card__cta">Explore case <ArrowUpRight size={17} /></span>
         </div>
         <span className="project-card__arrow" aria-hidden="true"><ArrowUpRight size={18} /></span>
@@ -28,4 +29,3 @@ export function ProjectCard({ project, index = 0, onExplore }) {
     </article>
   );
 }
-

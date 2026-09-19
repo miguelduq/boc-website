@@ -9,7 +9,7 @@ export function ProjectDetail({ project }) {
       <header className="project-detail__hero" id="home">
         <div className="project-detail__grid" aria-hidden="true" />
         <div className="container">
-          <a className="project-detail__back" href="/#projects"><ArrowLeft size={17} /> Back to projects</a>
+          <a className="project-detail__back" href="/projects"><ArrowLeft size={17} /> Back to projects</a>
           <div className="project-detail__hero-layout">
             <div>
               <p className="eyebrow eyebrow--light">{project.category}</p>
@@ -59,12 +59,33 @@ export function ProjectDetail({ project }) {
           <div className="project-detail__section-head"><p className="eyebrow">05 / How it works</p><h2 id="workflow-title">One connected data workflow.</h2><p>Each layer prepares the information for the next, from source to business-ready output.</p></div>
           <ProcessDiagram label="End-to-end data automation workflow" steps={project.workflow} />
           <div className="project-detail__diagram"><ProjectImage media={project.images.workflow} /></div>
+          {project.workflowLegend && (
+            <div className="workflow-legend">
+              <div className="workflow-legend__head">
+                <h3>{project.workflowLegend.title}</h3>
+                <p>{project.workflowLegend.intro}</p>
+              </div>
+              <ol className="workflow-legend__list">
+                {project.workflowLegend.items.map((item) => (
+                  <li key={item.step}>
+                    <div className="workflow-legend__top">
+                      <span className="workflow-legend__step">{item.step}</span>
+                      <strong>{item.name}</strong>
+                    </div>
+                    <p className="workflow-legend__role">{item.role}</p>
+                    <p className="workflow-legend__label">Examples that can be used</p>
+                    <ul className="workflow-legend__tools">{item.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
         </div>
       </section>
 
       <section className="project-detail__section project-detail__benefits section-dark" aria-labelledby="benefits-title">
         <div className="container">
-          <div className="project-detail__section-head"><p className="eyebrow eyebrow--light">06 / Benefits</p><h2 id="benefits-title">Value created through structure and automation.</h2><p>The design is ready for verified metrics to be added later, without using unconfirmed quantitative claims.</p></div>
+          <div className="project-detail__section-head"><p className="eyebrow eyebrow--light">06 / Benefits</p><h2 id="benefits-title">Value created through structure and automation.</h2><p>Outcomes of replacing a manual, file-dependent routine with a structured and automated flow.</p></div>
           <ul className="project-detail__benefit-grid">
             {project.benefits.map((benefit, index) => <li key={benefit}><span>{String(index + 1).padStart(2, "0")}</span><Check aria-hidden="true" size={17} /><strong>{benefit}</strong></li>)}
           </ul>
