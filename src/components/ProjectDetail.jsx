@@ -73,7 +73,7 @@ export function ProjectDetail({ project }) {
                       <strong>{item.name}</strong>
                     </div>
                     <p className="workflow-legend__role">{item.role}</p>
-                    <p className="workflow-legend__label">Examples that can be used</p>
+                    <p className="workflow-legend__label">Works with</p>
                     <ul className="workflow-legend__tools">{item.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul>
                   </li>
                 ))}

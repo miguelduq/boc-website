@@ -1,24 +1,16 @@
 import { Award } from "lucide-react";
-import { LogoMarquee } from "./LogoMarquee";
 import { certifications } from "../data/credibilityData";
 
-function CertificationCard({ certification }) {
-  return (
-    <article className="certification-card">
-      <div className="certification-card__issuer">
-        {certification.logo ? (
-          <img alt="" draggable="false" src={certification.logo} />
-        ) : (
-          <Award aria-hidden="true" size={19} strokeWidth={1.5} />
-        )}
-        <span>{certification.issuer}</span>
-      </div>
-      <h3>{certification.name}</h3>
-    </article>
-  );
+// One card per certification, grouped by issuer so the same brand stays together.
+function byIssuer(items) {
+  const order = [];
+  items.forEach((item) => { if (!order.includes(item.issuer)) order.push(item.issuer); });
+  return [...items].sort((a, b) => order.indexOf(a.issuer) - order.indexOf(b.issuer));
 }
 
 export function Certifications({ title = "Certifications", description = "Credentials held by BoC professionals", intro = false }) {
+  const items = byIssuer(certifications);
+
   return (
     <section className={"credibility-strip certifications" + (intro ? " certifications--intro" : "")} aria-labelledby="certifications-title">
       <div className="container credibility-strip__heading">
@@ -27,11 +19,23 @@ export function Certifications({ title = "Certifications", description = "Creden
         </div>
         <p>{description}</p>
       </div>
-      <LogoMarquee ariaLabel="Certifications. Drag horizontally to browse." speed={0.3}>
-        {certifications.map((certification) => (
-          <CertificationCard certification={certification} key={certification.name} />
+      <div className="container certification-grid">
+        {items.map((certification) => (
+          <article className="certification-card" data-reveal key={certification.name}>
+            <div className="certification-card__issuer">
+              {certification.logo ? (
+                <img alt={certification.issuer} draggable="false" src={certification.logo} />
+              ) : (
+                <>
+                  <Award aria-hidden="true" size={15} strokeWidth={1.7} />
+                  <span>{certification.issuer}</span>
+                </>
+              )}
+            </div>
+            <h3>{certification.name}</h3>
+          </article>
         ))}
-      </LogoMarquee>
+      </div>
     </section>
   );
 }

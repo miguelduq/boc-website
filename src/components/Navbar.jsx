@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 
-const links = [["What we solve", "/#solve"], ["Services", "/#services"], ["Projects", "/projects"], ["Who we are", "/about"], ["Contact", "/#contact"]];
+const links = [["Projects", "/projects"], ["Who we are", "/about"], ["Contact", "/#contact"]];
 
 const isCurrent = (href) => {
   if (href.includes("#")) return false;

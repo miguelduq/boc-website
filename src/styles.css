@@ -641,3 +641,18 @@ p { text-wrap: pretty; }
 .why__flow { border: 1px solid var(--border-light); background: rgba(3, 22, 18, .5); }
 .why + .projects { position: relative; z-index: 1; margin-top: -2rem; border-top: 1px solid rgba(201, 245, 107, .18); border-radius: 2rem 2rem 0 0; box-shadow: 0 -1.5rem 3rem rgba(0, 0, 0, .18); }
 @media (max-width: 52rem) { .why + .projects { margin-top: -1.25rem; border-radius: 1.25rem 1.25rem 0 0; } }
+
+/* ===== Certifications: one card per credential ===== */
+.certifications { padding-bottom: 2.6rem; }
+.certification-grid { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; }
+.certification-card { display: flex; width: auto; min-width: 0; min-height: 7.4rem; flex: 0 1 calc((100% - 3.5rem) / 6); flex-direction: column; padding: .95rem 1rem 1.05rem; border: 1px solid rgba(255, 255, 255, .11); border-radius: .8rem; background: rgba(7, 31, 27, .38); }
+.certification-card__issuer { display: flex; align-items: center; gap: .4rem; color: var(--lime); font-size: .63rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.certification-card__issuer img { width: auto; max-width: 5.5rem; height: auto; max-height: 1.5rem; object-fit: contain; }
+.certification-card h3 { margin: .7rem 0 0; color: rgba(255, 255, 255, .92); font-size: .85rem; font-weight: 560; letter-spacing: -.01em; line-height: 1.4; }
+@media (max-width: 67rem) { .certification-card { flex-basis: calc((100% - 2.1rem) / 4); } }
+@media (max-width: 52rem) { .certification-card { min-height: 6.4rem; flex-basis: calc((100% - 1.4rem) / 3); } }
+@media (max-width: 38rem) { .certification-card { flex-basis: calc((100% - .7rem) / 2); } }
+
+/* service cards: tools can span more than one line */
+.service-card__tools { display: grid; gap: .3rem; }
+.service-card__tools p { margin: 0; }

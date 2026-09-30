@@ -72,7 +72,7 @@ export const certifications = [
     logoFile: "/assets/certifications/microsoft.svg",
   },
   {
-    name: "Dataiku Certifications",
+    name: "Dataiku Platform Certifications",
     issuer: "Dataiku",
     logo: null,
     logoFile: "/assets/certifications/dataiku.svg",

@@ -14,7 +14,7 @@ export const services = [
     title: "Data & Business Intelligence",
     description: "Integrate data from different sources and turn it into dashboards, analytics and reporting that leadership can act on.",
     items: ["Data integration", "Dashboards & analytics", "Executive reporting", "Decision support"],
-    tools: ["Power BI", "DAX", "QuickSight"],
+    tools: ["Power BI", "QuickSight", "Tableau", "Looker"],
     icon: BarChart3,
   },
   {
@@ -30,7 +30,7 @@ export const services = [
     title: "Process Automation",
     description: "Remove repetitive manual work, from recurring reports to extensive presentations, reducing hours spent and human error.",
     items: ["Reporting automation", "Automated presentations", "Workflow automation"],
-    tools: ["Power Automate", "Python", "VBA"],
+    tools: ["Power Automate", "Python", "VBA", "Logic Apps", "n8n"],
     icon: Workflow,
   },
   {
@@ -46,7 +46,10 @@ export const services = [
     title: "End-to-End Technology Solutions",
     description: "Projects that combine multiple technologies and competencies to solve a complete business problem, from source systems to the final business-ready output.",
     items: ["Source-to-decision workflows", "Cloud-based data platforms", "Multidisciplinary delivery team"],
-    tools: ["SAP", "Salesforce", "Azure", "AWS"],
+    toolGroups: [
+      ["SAP", "Salesforce", "FTP/SFTP", "SQL & NoSQL databases", "dbt", "Databricks", "ClickHouse", "S3"],
+      ["Azure", "AWS", "GCP", "Snowflake"],
+    ],
     icon: Layers,
   },
 ];
@@ -126,9 +129,9 @@ export const values = [
 ];
 
 export const statistics = [
-  { value: "5+", label: "Years of experience" },
-  { value: "0+", label: "Projects delivered" },
-  { value: "0+", label: "Clients served" },
+  { value: "10+", label: "Years of experience" },
+  { value: "20+", label: "Projects delivered" },
+  { value: "10+", label: "Clients served" },
 ];
 
 export const contacts = {
